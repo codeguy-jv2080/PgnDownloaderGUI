@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>PGN Downloader</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M5 15v5h14v-5"/></symbol>
+    <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 11a9 9 0 1 1 2.6 7.4M3 4v7h7M12 7v5l3 2"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16M8 4v6m8 4v6"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6h7l2 2h9v12H3z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M5 3h9l5 5v13H5zM14 3v6h5M8 13h8m-8 4h5"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></symbol>
+    <symbol id="i-device" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 21h8m-4-5v5"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 3h7v7m0-7L10 14M10 3H3v18h18v-7"/></symbol>
+    <symbol id="i-reuse" viewBox="0 0 24 24"><path d="m8 3-5 5 5 5M3 8h11a7 7 0 0 1 0 14"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6zM8 12l3 3 5-6"/></symbol>
+    <symbol id="i-knight" viewBox="0 0 32 32"><path d="m12 5 3 3 5-3v5l6 9-4 4-6-3-4 5h10v3H8v-3l4-9-4 2-3-3 7-8z"/><circle cx="17" cy="12" r="1"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#download" aria-label="PGN Downloader home">
+        <span class="brand-mark"><svg class="icon"><use href="#i-knight"/></svg></span>
+        <span>PGN<span class="brand-sub">Downloader</span></span>
+      </a>
+      <div class="sidebar-label">YOUR WORKSPACE</div>
+      <nav class="navigation" aria-label="Main navigation">
+        <button type="button" class="nav-item active" data-view="download" aria-current="page"><svg class="icon"><use href="#i-download"/></svg><span>Download games</span></button>
+        <button type="button" class="nav-item" data-view="history"><svg class="icon"><use href="#i-history"/></svg><span>History</span><span class="nav-count" id="history-count" hidden>0</span></button>
+        <button type="button" class="nav-item" data-view="settings"><svg class="icon"><use href="#i-settings"/></svg><span>Settings</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="local-label"><span class="status-dot"></span> A home for your games</div>
+        <p>Saved on your computer.<br>Ready for your next analysis.</p>
+        <div class="powered-by">Powered by pgn-downloader</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="page-header">
+        <div><div class="eyebrow" id="page-eyebrow">YOUR GAMES, ONE PLACE</div><h1 id="page-title">Download games</h1><p id="page-subtitle">Bring your online games to your local chess library.</p></div>
+        <div class="header-actions"><button id="theme-toggle" type="button" class="button secondary" aria-label="Switch to dark mode" aria-pressed="false" disabled><svg class="icon" aria-hidden="true"><use id="theme-icon" href="#i-moon"/></svg><span id="theme-label">Dark mode</span></button><span class="local-badge"><svg class="icon"><use href="#i-device"/></svg> Local workspace</span></div>
+      </header>
+
+      <div id="connection-error" class="notice error-notice" role="alert" hidden><svg class="icon"><use href="#i-info"/></svg><span id="connection-error-text"></span><button type="button" id="retry-connection" class="text-button">Retry</button></div>
+      <div id="toast" class="notice success-notice" role="status" hidden></div>
+
+      <section id="view-download" class="view" aria-label="Download games">
+        <div class="download-layout">
+          <form id="download-form" class="card download-card">
+            <div class="card-heading"><div><h2>Set up your download</h2><p>Choose a player. Make the collection yours.</p></div><button id="clear-form" class="button secondary small" type="button" title="Clear the username and uncheck all game types" aria-label="Clear username and all game types" disabled><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>Clear all</button></div>
+            <fieldset class="source-fieldset"><legend>Chess platform</legend>
+              <div class="source-options">
+                <label class="source-option"><input type="radio" name="server" value="lichess" checked><span class="source-content"><span class="source-logo lichess-logo"><svg class="icon"><use href="#i-knight"/></svg></span><span><strong>Lichess</strong><small>lichess.org</small></span><span class="radio-indicator"></span></span></label>
+                <label class="source-option"><input type="radio" name="server" value="chess.com"><span class="source-content"><span class="source-logo chess-logo" aria-hidden="true">♟</span><span><strong>Chess.com</strong><small>chess.com</small></span><span class="radio-indicator"></span></span></label>
+              </div>
+            </fieldset>
+
+            <div class="field"><label for="username">Player username <span class="required-mark" aria-label="required">*</span></label><input id="username" name="username" type="text" placeholder="Enter a Lichess username" required autocomplete="off" spellcheck="false" maxlength="100"><span class="field-hint" id="username-hint">The public username of the player whose games you want.</span></div>
+
+            <div class="section-divider"><span>GAME FILTERS</span><span class="muted">Optional</span></div>
+            <div class="field"><label for="color">Playing as</label><div class="select-wrap"><select id="color" name="color"><option value="">Either color</option><option value="white">White</option><option value="black">Black</option></select></div></div>
+            <fieldset class="mode-fieldset"><legend>Game types</legend><div id="mode-options" class="mode-options"></div><p class="field-hint" id="mode-hint">Select at least one game type.</p></fieldset>
+            <div class="field-grid dates-grid">
+              <div class="field"><label for="since">From <span class="label-detail">(inclusive)</span></label><input id="since" name="since" type="text" placeholder="All available games" spellcheck="false" aria-describedby="date-hint"></div>
+              <div class="field"><label for="until">Until <span class="label-detail">(inclusive)</span></label><input id="until" name="until" type="text" placeholder="Latest available games" spellcheck="false" aria-describedby="date-hint"></div>
+            </div>
+            <p class="field-hint date-hint" id="date-hint"><svg class="icon"><use href="#i-info"/></svg><span>Use a year, month, or date, such as 2025-06-01. Relative dates work too: <strong>3m</strong> for 3 months ago.</span></p>
+
+            <div class="section-divider"><span>SAVE TO YOUR COMPUTER</span></div>
+            <div class="field"><label for="output-dir">Output folder</label><div class="input-with-button"><input id="output-dir" name="output_dir" type="text" required placeholder="Loading your output folder…" spellcheck="false"><button class="button secondary browse-button" type="button" data-browse="output-dir" disabled title="Folder browsing is available in the Windows app"><svg class="icon"><use href="#i-folder"/></svg>Browse</button></div></div>
+            <div class="field filename-field"><label for="filename">File name <span class="label-detail">(optional)</span></label><input id="filename" name="filename" type="text" placeholder="Automatically named for this download" spellcheck="false" aria-describedby="filename-hint"><p class="field-hint" id="filename-hint">Use a .pgn extension. If a file already exists, choose a different name.</p></div>
+            <div id="form-error" class="inline-error" role="alert" hidden></div>
+            <div class="form-footer"><span class="footer-note"><svg class="icon"><use href="#i-shield"/></svg>Direct from your selected platform</span><button id="download-button" type="submit" class="button primary" disabled><svg class="icon"><use href="#i-download"/></svg><span>Download games</span></button></div>
+          </form>
+
+          <aside class="download-aside" aria-label="Download progress and help">
+            <section class="card activity-card"><div class="aside-heading"><h2>Download activity</h2><span id="activity-indicator" class="activity-indicator" hidden></span></div>
+              <div id="activity-empty" class="activity-empty"><div class="chess-illustration" aria-hidden="true"><div class="board-tile tile-one"></div><div class="board-tile tile-two"></div><div class="board-tile tile-three"></div><svg class="illustration-knight"><use href="#i-knight"/></svg><span class="illustration-check"><svg class="icon"><use href="#i-check"/></svg></span></div><h3>Your next game collection<br>starts here.</h3><p>Set up a download to follow its progress and open your PGN file.</p></div>
+              <div id="activity-detail" hidden><div class="activity-identity"><div id="activity-avatar" class="player-avatar"></div><div><h3 id="activity-username"></h3><p id="activity-source"></p></div></div><div class="activity-status-line"><span id="activity-status" class="status-badge"></span><span id="activity-time" class="muted"></span></div><div id="activity-progress" class="progress-track" role="progressbar" aria-label="Download in progress"><span></span></div><div class="activity-counts"><div><strong id="activity-games">0</strong><span>games saved</span></div><div><strong id="activity-size">0 B</strong><span>file size</span></div></div><p id="activity-message" class="activity-message" role="status" aria-live="polite"></p><p id="activity-retry" class="retry-countdown" role="timer" aria-live="off" hidden></p><div id="activity-path" class="activity-path" hidden></div><div id="activity-actions" class="activity-actions"></div></div>
+            </section>
+            <section class="help-card"><span class="help-icon"><svg class="icon"><use href="#i-file"/></svg></span><h3>More time at the board.</h3><p>Your games are saved as a PGN file, ready to open in your favorite chess analysis app.</p><div class="help-divider"></div><p class="help-small"><strong>Good to know</strong>Large collections can take a while. Progress updates here while your games are downloaded.</p><p class="help-small">Downloads need an internet connection to Lichess or Chess.com. Your settings and history stay on this computer.</p></section>
+          </aside>
+        </div>
+      </section>
+
+      <section id="view-history" class="view" aria-label="Download history" hidden>
+        <div class="history-summary"><div class="summary-stat"><span>Downloads</span><strong id="stat-downloads">0</strong></div><div class="summary-stat"><span>Completed</span><strong id="stat-completed">0</strong></div><div class="summary-stat"><span>Games in completed downloads</span><strong id="stat-games">0</strong></div></div>
+        <div class="card history-card"><div class="history-toolbar"><h2>Your downloads</h2><div class="history-toolbar-actions"><label class="search-input"><svg class="icon"><use href="#i-search"/></svg><input type="search" id="history-search" placeholder="Search players or files" aria-label="Search download history"></label><button id="clear-history" type="button" class="button secondary small" disabled><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>Clear history</button></div></div><div id="history-empty" class="history-empty"><span class="empty-icon"><svg class="icon"><use href="#i-history"/></svg></span><h3>A record of every collection.</h3><p>Your downloads will appear here, with their game counts and saved files.</p><button type="button" class="button secondary" data-go-download>Start a download<svg class="icon"><use href="#i-arrow"/></svg></button></div><div id="history-no-results" class="history-no-results" hidden>No downloads match your search.</div><div id="history-list" class="history-list"></div></div>
+      </section>
+
+      <section id="view-settings" class="view" aria-label="Settings" hidden>
+        <div class="settings-layout"><form id="settings-form" class="card settings-card"><div class="card-heading"><div><h2>Download preferences</h2><p>A comfortable starting point for every collection.</p></div></div><div class="field"><label for="settings-output-dir">Default output folder</label><div class="input-with-button"><input id="settings-output-dir" type="text" required spellcheck="false"><button class="button secondary browse-button" type="button" data-browse="settings-output-dir" disabled title="Folder browsing is available in the Windows app"><svg class="icon"><use href="#i-folder"/></svg>Browse</button></div><p class="field-hint">New downloads start here. You can choose a different folder for each download.</p></div><div id="settings-error" class="inline-error" role="alert" hidden></div><div class="settings-footer"><button type="submit" id="save-settings" class="button primary" disabled>Save preferences<svg class="icon"><use href="#i-check"/></svg></button></div></form>
+        <section class="card settings-card storage-card"><div class="card-heading"><div><h2>Local app data</h2><p>Your preferences and download history live here.</p></div><svg class="icon"><use href="#i-device"/></svg></div><div class="storage-label">DATA FOLDER</div><p id="data-dir" class="path-value">Loading…</p><button id="open-data-dir" type="button" class="button secondary" disabled><svg class="icon"><use href="#i-folder"/></svg>Open data folder</button><div class="storage-details"><div><span>Download engine</span><strong id="backend-name">pgn-downloader</strong></div><div><span>Engine version</span><strong id="backend-version">—</strong></div><div><span>Storage</span><strong>Local SQLite database</strong></div></div></section></div>
+      </section>
+
+      <footer class="page-footer"><span>PGN Downloader</span><span>Collect. Study. Play.</span></footer>
+    </main>
+  </div>
+  <dialog id="clear-history-dialog" class="confirm-dialog" aria-labelledby="clear-history-title" aria-describedby="clear-history-description">
+    <h2 id="clear-history-title">Clear all download history?</h2>
+    <p id="clear-history-description">All past download entries will be removed. Your saved PGN files will stay on your computer.</p>
+    <div id="clear-history-error" class="inline-error" role="alert" hidden></div>
+    <div class="dialog-actions"><button id="cancel-clear-history" type="button" class="button secondary" autofocus>Cancel</button><button id="confirm-clear-history" type="button" class="button danger">Clear history</button></div>
+  </dialog>
+</body>
+</html>
