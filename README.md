@@ -4,9 +4,19 @@ A local Windows GUI for the existing **pgn-downloader** engine. Download public 
 
 ## Get started on Windows
 
-This repository currently provides source code only; no prebuilt Windows download has been published. Cloning the repository or choosing **Code > Download ZIP** does not include `dist\PgnDownloaderGUI\PgnDownloaderGUI.exe`. You can run from source or build that executable using the steps below.
+Download the ready-to-run Windows x64 app from [Releases](https://github.com/codeguy-jv2080/PgnDownloaderGUI/releases/latest). Choose **PgnDownloaderGUI-v1.0.0-Windows-x64.zip** under Assets. The **Source code** downloads and **Code > Download ZIP** contain the source project; use the source instructions below for those.
 
-Microsoft Edge WebView2 Runtime and .NET Framework 4.6.2 or newer must be available on Windows for either option. The runtime preflight reports missing components without changing your system.
+Microsoft Edge WebView2 Runtime and .NET Framework 4.6.2 or newer must be available on Windows to run the desktop app. The runtime preflight reports missing components without changing your system.
+
+### Download and launch the Windows app
+
+1. Download **PgnDownloaderGUI-v1.0.0-Windows-x64.zip** from the release page.
+2. Right-click the ZIP, choose **Extract All**, and open the extracted `PgnDownloaderGUI` folder.
+3. Double-click **PgnDownloaderGUI.exe**. Keep its `_internal` folder alongside it. Python installation and source setup are not required for this download.
+
+The release includes a `SHA256SUMS.txt` file. To verify the downloaded ZIP, run `Get-FileHash .\PgnDownloaderGUI-v1.0.0-Windows-x64.zip -Algorithm SHA256` in PowerShell from your download folder and compare the result with that file.
+
+The app creates its settings and empty download history in your Windows user profile on first use. The ZIP does not include saved usernames, preferences, or games. Existing local settings and history are retained when updating. The executable is unsigned; see [Windows security](#windows-security).
 
 ### Run from source
 
