@@ -2,13 +2,27 @@
 
 A local Windows GUI for the existing **pgn-downloader** engine. Download public games from Lichess and Chess.com without entering commands.
 
-## Launch
+## Get started on Windows
 
-Double-click **dist\PgnDownloaderGUI\PgnDownloaderGUI.exe**. This is the fixed application path and remains the same for updates. The existing `Start PgnDownloaderGUI.vbs` is optional and points to that same executable; no release-selection pointer is used.
+This repository currently provides source code only; no prebuilt Windows download has been published. Cloning the repository or choosing **Code > Download ZIP** does not include `dist\PgnDownloaderGUI\PgnDownloaderGUI.exe`. You can run from source or build that executable using the steps below.
 
-The packaged app includes Python and its dependencies. Keep the complete `PgnDownloaderGUI` distribution folder together, including `_internal`. Microsoft Edge WebView2 Runtime and .NET Framework 4.6.2 or newer must be available on Windows. The runtime preflight reports missing components without changing your system.
+Microsoft Edge WebView2 Runtime and .NET Framework 4.6.2 or newer must be available on Windows for either option. The runtime preflight reports missing components without changing your system.
 
-For source use, double-click `setup.bat` once with Python 3.10 or newer installed, then use the VBS launcher. Source setup downloads dependencies into the project's `.venv`; it does not install them globally. If a built executable exists, launch `.venv\Scripts\pythonw.exe main.py` from development tools to run edited source instead.
+### Run from source
+
+1. Install Python 3.10 or newer if it is not already installed.
+2. Clone this repository, or download its ZIP and extract the entire folder.
+3. In that folder, double-click **setup.bat** and wait for setup to complete. Internet access is needed to download dependencies into the project's `.venv`; they are not installed globally.
+4. Double-click **Start PgnDownloaderGUI.vbs** in the same folder to launch the GUI without a command window.
+
+### Build and launch the Windows executable
+
+1. With the source folder and Python available, double-click **build.bat**. It performs source setup if needed, installs build dependencies, and builds and verifies the app. Internet access is needed to install dependencies.
+2. After the build succeeds, double-click **dist\PgnDownloaderGUI\PgnDownloaderGUI.exe**.
+
+The packaged app includes Python and its dependencies. Keep the complete `PgnDownloaderGUI` distribution folder together, including `_internal`. Later builds update this same application folder and preserve the executable's launch path.
+
+The existing VBS launcher opens the packaged executable when it is present; otherwise it runs the source after setup. To run edited source when a built executable exists, use `.venv\Scripts\pythonw.exe main.py` from development tools.
 
 ## Download games
 
