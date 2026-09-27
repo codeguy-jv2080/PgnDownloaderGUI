@@ -79,3 +79,14 @@ Live requests to Lichess require the user's separate explicit approval. Appearan
 The upstream source commit, license, and adapter changes are documented in `vendor/pgn_downloader/UPSTREAM.md` and `THIRD_PARTY_NOTICES.md`.
 
 Implementation references: [FastAPI lifespan](https://fastapi.tiangolo.com/advanced/events/), [FastAPI static files](https://fastapi.tiangolo.com/tutorial/static-files/), [pywebview documentation](https://pywebview.flowrl.com/guide/).
+
+## Windows security
+
+The packaged Windows executable is not code-signed. Windows SmartScreen or
+another reputation-based security prompt may therefore appear on first launch.
+
+## License
+
+PGN Downloader GUI is licensed under GPL-3.0-or-later. See `LICENSE` and
+`THIRD_PARTY_NOTICES.md`. The bundled upstream downloader and other third-party
+components retain their own applicable notices and license terms.
